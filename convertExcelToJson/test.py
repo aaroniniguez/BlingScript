@@ -1,3 +1,5 @@
+# Author: Aaron Iniguez
+# convert excel values into json file
 import openpyxl
 import collections
 Camera = "RED Cameras"
@@ -28,7 +30,6 @@ for i in myrange:
 					mydict["id"] = resolution
 					mydict["easyName"] = easyName
 					mydict["rate"] = [{"id":rateId,"name":rateName}]
-					#item["res"].append({"id":resolution,"easyName":easyName,"rate":[{"id":rateId,"name":rateName}]})
 					item["res"].append(mydict)
 		if not idExist:
 			mydict = collections.OrderedDict()
@@ -38,8 +39,6 @@ for i in myrange:
 			mydict2 = collections.OrderedDict()
 			mydict2["id"] = compressionCur
 			mydict2["res"] = [mydict]
-			#compression.append({"id":compressionCur,"res":[{"id":resolution,"easyName":easyName,"rate":[{"id":rateId,"name":rateName}]}]})
-			#compression.append({"id":compressionCur,"res":[mydict]})
 			compression.append(mydict2)
 for i in compression:
 	print i["id"]
