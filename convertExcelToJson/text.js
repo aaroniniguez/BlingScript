@@ -1,4 +1,6 @@
-[
+var redHelium = {
+	"id":"RED Helium",
+	"codecs":[
     {
         "id": "2:1", 
         "res": [
@@ -8336,4 +8338,4 @@
             }
         ]
     }
-]
+]};

@@ -1,11 +1,10 @@
 import openpyxl
 import collections
-#test
 Camera = "RED Cameras"
 wb = openpyxl.load_workbook("data.xlsx")
 sheet = wb.get_sheet_by_name(Camera)
 compression = []
-myrange = range(612,802)+range(848,1563)+range(1609,2030)
+myrange = range(612,802)+range(848,1563)+range(1609,2031)
 for i in myrange:
 	if sheet.cell(row=i,column=1).value is not None:
 		compressionCur = sheet.cell(row=i,column=3).value
@@ -14,7 +13,6 @@ for i in myrange:
 		resolution = sheet.cell(row=i,column=2).value.split("\n")[0]
 		easyName = sheet.cell(row=i,column=2).value.split("\n")[1].replace("(","").replace(")","")
 		rateId = str(sheet.cell(row=i,column=4).value).replace("p","").replace(".0","")
-		print i
 		rateName = str(sheet.cell(row=i,column=6).value*8).replace(".0","")
 		idExist = False
 		for item in compression:
