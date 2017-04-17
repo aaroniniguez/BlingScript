@@ -2,11 +2,11 @@
 # convert excel values into json file
 import openpyxl
 import collections
-Camera = "RED Cameras"
+Camera = "Data"
 wb = openpyxl.load_workbook("data.xlsx")
 sheet = wb.get_sheet_by_name(Camera)
 compression = []
-myrange = range(612,802)+range(848,1563)+range(1609,2031)
+myrange = range(283,322)#+range(848,1563)+range(1609,2031)
 for i in myrange:
 	if sheet.cell(row=i,column=1).value is not None:
 		compressionCur = sheet.cell(row=i,column=3).value
