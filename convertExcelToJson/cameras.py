@@ -2,23 +2,28 @@
 # convert excel values into json file
 import openpyxl
 import collections
-Camera = "Data"
+sheetName = "Sony Cameras"
+Camera = "Sony AS7"
 wb = openpyxl.load_workbook("data.xlsx")
-sheet = wb.get_sheet_by_name(Camera)
-compression = []
-myrange = range(283,322)#+range(848,1563)+range(1609,2031)
+sheet = wb.get_sheet_by_name(sheetName)
+codecs = []
+myrange = range(54,64)
 for i in myrange:
 	if sheet.cell(row=i,column=1).value is not None:
-		compressionCur = sheet.cell(row=i,column=3).value
-		if compressionCur == "ProRes 422":
-			compressionCur = "ProRes422"
+		compression = sheet.cell(row=i,column=3).value.replace("\n","")
+		if compression == "ProRes 422":
+			compression = "ProRes422"
+		resInfo = sheet.cell(row=i,column=2).value.split("\n")
 		resolution = sheet.cell(row=i,column=2).value.split("\n")[0]
-		easyName = sheet.cell(row=i,column=2).value.split("\n")[1].replace("(","").replace(")","")
+		if len(resInfo) > 1:
+			easyName = sheet.cell(row=i,column=2).value.split("\n")[1].replace("(","").replace(")","")
+		else:
+			easyName = ""
 		rateId = str(sheet.cell(row=i,column=4).value).replace("p","").replace(".0","")
-		rateName = str(sheet.cell(row=i,column=6).value*8).replace(".0","")
+		rateName = str(sheet.cell(row=i,column=5).value).replace(".0","")
 		idExist = False
-		for item in compression:
-			if item["id"] == compressionCur:
+		for item in codecs:
+			if item["id"] == compression:
 				resolExist = False
 				idExist = True
 				for resol in item["res"]:
@@ -37,11 +42,13 @@ for i in myrange:
 			mydict["easyName"] = easyName
 			mydict["rate"] = [{"id":rateId,"name":rateName}]
 			mydict2 = collections.OrderedDict()
-			mydict2["id"] = compressionCur
+			mydict2["id"] = compression
 			mydict2["res"] = [mydict]
-			compression.append(mydict2)
-for i in compression:
+			codecs.append(mydict2)
+for i in codecs:
 	print i["id"]
 import json
+outPut = {"id":Camera,
+		"codecs":codecs}
 with open("text", "w") as outfile:
-    json.dump(compression, outfile, indent=4)
+    json.dump(outPut, outfile, indent=4)
